@@ -1,11 +1,11 @@
 {
   "name": "upload-h5",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "webpack --env.NODE_ENV=production",
-    "dev": "webpack-dev-server",
+    "dev": "webpack-dev-server --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
@@ -14,7 +14,9 @@
   "author": "icon",
   "license": "ISC",
   "dependencies": {
+    "antd": "^3.20.1",
     "classnames": "^2.2.6",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-autobind": "^1.0.6",
     "react-dom": "^16.8.6"

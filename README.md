@@ -9,3 +9,8 @@
 #如遇到代理问题  允许  npm config set proxy null
 
 #安装 npm i [包名]
+
+window.apiHost  string    上传的地址 (http://localhost:9527)
+length          number    上传的个数
+multiple        bool      是否支持多选，浏览器command键多选，建议设为false，
+type            string    上传图片的格式，逗号分隔
