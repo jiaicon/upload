@@ -13,16 +13,25 @@ module.exports = {
             {
                 test: /\.js$/,
                 use: 'babel-loader',
-                exclude: /node_modules/
             },
             {
-                test: /\.css$/,
+                test: /\.(css|less)$/,
                 use: ['style-loader', 'css-loader']
+            }, {
+                test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000
+                }
+            }, {
+                test: /\.(eot|ttf|wav|mp3)$/,
+                loader: 'file-loader'
             }
-        ]
+        ],
     },
     devServer: {
-        contentBase: '../'
+        contentBase: '../',
+      publicPath: '/',
     },
     plugins: [
         new htmlWebpackPlugin({

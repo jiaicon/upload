@@ -1,0 +1,68 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "env": {
+    "node": true,
+    "es6": true,
+    "commonjs": true,
+    "browser": true   //不然全局对象，如：Image   Date会报错
+  },
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "global-require": "off",
+    "no-console": "off",
+    "react/jsx-filename-extension": "off",   //限制包含JSX的文件扩展名
+    "react/require-default-props": "off",   //非require的props需在defaultProps中申明
+    "import/no-extraneous-dependencies": "off",
+    "semi": "warn",      //行末尾没有分号
+    "react/prop-types": "off",
+    "max_line_length": "off",
+    "arrow-body-style": [2, "as-needed"],    //箭头函数直接返回不需要大括号
+    // 允许使用 for in
+    "no-restricted-syntax": 0,
+    "guard-for-in": 0,
+    // 不需要每次都有返回
+    "consistent-return": 0,
+    "no-trailing-spaces": 0,
+    //空行
+    "lines-between-class-members": 0,
+    // 引用时候根据根目录基础
+    "import/no-unresolved": 0,
+    // jsx > 紧跟着属性
+    "react/jsx-closing-bracket-location": [1, "after-props"],
+    "react/destructuring-assignment": "off",
+    // 禁止缩进错误
+    "indent": 0,
+    //对象最后不加逗号
+    "comma-dangle": "off",
+    //方法前面用this，使用了autobind，所以不再检查
+    "class-methods-use-this": "off",
+    // 有一些 event 的时候，不需要 role 属性，不需要其他解释
+    "jsx-a11y/no-static-element-interactions":0,
+    "jsx-a11y/click-events-have-key-events":0,
+    //禁止无用的表达式
+    "no-unused-expressions": "off",
+    //按照具体规范的React.createClass 的生命周期函数书写代码,空的周期会报错
+    "react/sort-comp": "off",
+    //没有用到的state
+    //"react/no-unused-state": "off
+    //return 语句中不能有赋值表达式
+    "no-return-assign": "off",
+    //命名前的下划线
+    "no-underscore-dangle": "off",
+    //匿名函数
+    "func-names": "off",
+    "no-lonely-if": "off",
+    "no-plusplus": "off",
+    "no-param-reassign": "off"
+  },
+  "parserOptions": {  //支持import和require
+    "ecmaVersion": 7,
+    "sourceType": "module",
+    "ecmaFeatures": {   //识别ES6语法
+      "jsx": true
+    }
+  }
+}

@@ -8,61 +8,59 @@ class UploadPhoto extends React.Component {
     constructor(props) {
         super(props);
         autoBind(this);
-        this.state={
+        this.state = {
             loading: false,
-            iserror: false,
             fileList: [],
-            max_length: props.max_length,
+            maxLength: props.maxLength,
             multiple: props.multiple || false,
             type: props.type,
-            visible: false
-        }
+            visible: false,
+          src: ''
+        };
     }
     componentDidMount() {
 
     }
     handleChange(file) {
-        //上传成功失败都会调用
+        // 上传成功失败都会调用
         console.log('上传回调：：', file);
-        const {handleChange} = this.props;
-        if(handleChange&&typeof handleChange==='function') {
+        const { handleChange } = this.props;
+        if (handleChange && typeof handleChange === 'function') {
             handleChange();
             return;
         }
-        if(file.file.status === 'uploading') {
+        if (file.file.status === 'uploading') {
             this.setState({
                 loading: true
             });
             return;
         }
-        if(file.file.status === 'done') {
-            let img = new Image();
+        if (file.file.status === 'done') {
+            const img = new Image();
             img.src = file.file.response.url;
-            img.onerror=()=>{
+            img.onerror = () => {
                 this.setState({
-                    iserror: true,
                     loading: false
-                })
+                });
             };
-            img.onload=()=>{
+            img.onload = () => {
                 this.setState({
-                    iserror: false,
                     fileList: file.fileList,
                     loading: false
-                })
+                });
             };
             return;
         }
-        if(file.file.status === "error") {
+        if (file.file.status === 'error') {
             this.setState({
                 fileList: file.fileList,
                 loading: false
-            })
+            });
         }
-        if(file.file.status === "removed") {
+        if (file.file.status === 'removed') {
             this.setState({
                 fileList: file.fileList
-            })
+            });
         }
     }
     handleBeforeUpload(file) {
@@ -75,15 +73,15 @@ class UploadPhoto extends React.Component {
         return this.checkImageType(file) && isLt3M && this.checkImageWH(file);
     }
     checkImageWH(file) {
-        return new Promise(function(resolve, reject) {
-            let filereader = new FileReader();
-            filereader.onload = e => {
-                let src = e.target.result;
+        return new Promise(((resolve, reject) => {
+            const fileReader = new FileReader();
+          fileReader.onload = (e) => {
+                const src = e.target.result;
                 const image = new Image();
-                image.onload = function() {
+                image.onload = function () {
                     // 获取图片的宽高，并存放到file对象中
-                    console.log('file width :' + this.width);
-                    console.log('file height :' + this.height);
+                    console.log(`file width :${this.width}`);
+                    console.log(`file height :${this.height}`);
                     file.width = this.width;
                     file.height = this.height;
                     resolve();
@@ -91,24 +89,24 @@ class UploadPhoto extends React.Component {
                 image.onerror = reject;
                 image.src = src;
             };
-            filereader.readAsDataURL(file);
-        });
+          fileReader.readAsDataURL(file);
+        }));
     }
     checkImageType(file) {
-        //限制图片 格式、size、分辨率
-        let {type} = this.state;
-        if(type) {
-            type=type.replace(/\s*/g,"").toLowerCase();
-            let type_arr = type.split(',');
-            let flag = false;
-            for(let i = 0; i < type_arr.length;i++) {
-                if(file.type == `image/${type_arr[i]}`) return true;
+        // 限制图片 格式、size、分辨率
+        let { type } = this.state;
+        if (type) {
+            type = type.replace(/\s*/g, '').toLowerCase();
+            const typeArr = type.split(',');
+            const flag = false;
+            for (let i = 0; i < typeArr.length; i++) {
+                if (file.type === `image/${typeArr[i]}`) return true;
             }
-            if(!flag) {
+            if (!flag) {
                 message.error(`只能上传${type}格式的图片~`);
                 return false;
             }
-        }else {
+        } else {
             const isJPG = file.type === 'image/jpeg';
             const isJPEG = file.type === 'image/jpeg';
             const isGIF = file.type === 'image/gif';
@@ -122,73 +120,78 @@ class UploadPhoto extends React.Component {
     }
     onRemove(file) {
         console.log('removed::', file);
-        const onRemove = this.props.onRemove;
-        onRemove&&typeof onRemove==='function'&&onRemove(file);
+        const { onRemove } = this.props;
+        onRemove && typeof onRemove === 'function' && onRemove(file);
     }
     handlePreview(file) {
         const { onPreview } = this.props;
-        if(onPreview&&typeof onPreview==='function') {
+        if (onPreview && typeof onPreview === 'function') {
             onPreview(file);
             return;
         }
         this.setState({
             visible: true,
             src: file.thumbUrl
-        })
+        });
     }
     onCancel(file) {
         const { onCancel } = this.props;
-        if(onCancel&&typeof onCancel==='function') {
+        if (onCancel && typeof onCancel === 'function') {
             onCancel(file);
             return;
         }
         this.setState({
             visible: false,
             src: ''
-        })
+        });
     }
     render() {
-        let { fileList, multiple, max_length, visible, src } = this.state;
-        let visible_props = this.props.visible;
-        let src_props = this.props.src;
-        let isRotate_props = this.props.isRotate;
-        if(visible_props != undefined && typeof visible_props === 'boolean') visible=visible_props;
-        if(src_props != undefined) src=src_props;
-        if(isRotate_props == undefined || typeof isRotate_props != 'boolean') isRotate_props=false;
-        const { apiHost } = this.props;
+        const {
+ fileList, multiple, maxLength
+} = this.state;
+        let { src, visible } = this.state;
+        const visibleProps = this.props.visible;
+        const srcProps = this.props.src;
+        let isRotateProps = this.props.isRotate;
+        if (visibleProps !== undefined && typeof visibleProps === 'boolean') visible = visibleProps;
+        if (srcProps !== undefined) src = srcProps;
+        if (isRotateProps === undefined || typeof isRotateProps !== 'boolean') isRotateProps = false;
+        const { apiHost, classNames } = this.props;
         const uploadButton = (
-            <div>
-                <Icon type={this.state.loading ? 'loading' : 'plus'} />
-                <div className="ant-upload-text">Upload</div>
-            </div>
+          <div>
+            <Icon type={this.state.loading ? 'loading' : 'plus'} />
+            <div className="ant-upload-text">Upload</div>
+          </div>
         );
-        let disabled = this.props.disabled;
-        if(disabled==undefined || typeof disabled != 'boolean') disabled=false;
+        let { disabled } = this.props;
+        if (disabled === undefined || typeof disabled !== 'boolean') disabled = false;
         console.log('fileList::::', fileList);
         const props = {
             showUploadList: true,
             listType: 'picture-card',
-            action: `${apiHost || window.apiHost || 'http://localhost:9527'}/api/image`,
+            action: `${apiHost || window.apiHost || 'http://localhost:40004'}/api/image`,
             accept: 'image/*',
             name: 'file',
-            multiple: multiple,
+            multiple,
             onChange: this.handleChange,
             onPreview: this.handlePreview,
             beforeUpload: this.handleBeforeUpload,
             onRemove: this.onRemove,
             disabled
         };
-        return <div>
+        return (
+          <div className={classNames || ''}>
             <Upload {...props}>
-                {fileList.length >= max_length ? null : uploadButton}
+              {fileList.length >= maxLength ? null : uploadButton}
             </Upload>
-            <Rotate isRotate={isRotate_props} visible={visible} src={src} onCancel={this.onCancel}/>
-        </div>
+            <Rotate isRotate={isRotateProps} visible={visible} src={src} onCancel={this.onCancel} />
+          </div>
+);
     }
 }
 
 UploadPhoto.propTypes = {
-    max_length: PropTypes.number,
+    maxLength: PropTypes.number,
     multiple: PropTypes.bool,
     type: PropTypes.string,
     onRemove: PropTypes.func,

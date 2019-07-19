@@ -1,44 +1,71 @@
 {
   "name": "upload-h5",
-  "version": "1.0.13",
+  "version": "1.0.5",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "precommit": "npm run lint",
     "build": "webpack --env.NODE_ENV=production",
-    "dev": "webpack-dev-server --open",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ext .js --ext .jsx src",
+    "lint-fix": "eslint --fix --ext .js --ext .jsx src"
   },
   "files": [
-    "index.js"
+    "dist"
   ],
   "author": "icon",
   "license": "ISC",
   "dependencies": {
-    "antd": "^3.20.1",
+    "antd": "^3.20.0",
+    "antd-mobile": "^2.2.11",
     "classnames": "^2.2.6",
+    "fastclick": "^1.0.6",
+    "html-webpack-plugin": "^3.2.0",
+    "html-withimg-loader": "^0.1.16",
+    "install": "^0.13.0",
+    "npm_upload_eg": "^1.0.12",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
     "react-autobind": "^1.0.6",
-    "react-dom": "^16.8.6",
-    "rotate-h5": "^1.0.2"
+    "rotate-h5": "^1.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.2",
     "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
-    "babel-preset-react-app": "^9.0.0",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-dynamic-import-node": "^2.3.0",
     "babel-plugin-import": "^1.12.0",
     "babel-plugin-named-asset-import": "^0.3.2",
-    "@babel/plugin-proposal-decorators": "^7.4.4",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "babel-loader": "^8.0.5",
+    "babel-preset-react-app": "^9.0.0",
     "css-loader": "^2.1.1",
-    "html-webpack-plugin": "^3.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.2",
+    "file-loader": "^4.0.0",
+    "husky": "^3.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1",
     "webpack-node-externals": "^1.7.2"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "env": {
+      "browser": true
+    }
   }
 }
